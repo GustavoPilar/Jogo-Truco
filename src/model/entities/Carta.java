@@ -5,6 +5,8 @@ public final class Carta {
     private Valor valor;
     private Nipe nipe;
 
+    public Carta () {}
+
     public Carta(Valor valor, Nipe nipe) {
         this.valor = valor;
         this.nipe = nipe;

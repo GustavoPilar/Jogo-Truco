@@ -3,7 +3,6 @@ package model.entities;
 import application.Main;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Jogador {
@@ -29,6 +28,10 @@ public class Jogador {
         cartasJogador.add(baralho.get(2));
     }
 
+    public void devolverCartas() {
+        cartasJogador.clear();
+    }
+
     public void removerCarta(int indice) {
         cartasJogador.remove(indice);
     }
@@ -48,16 +51,26 @@ public class Jogador {
         return sb.toString();
     }
 
-    public int jogarCarta() {
+    public Carta jogarCarta() {
+        Carta carta;
         int escolha = 0;
 
-        System.out.println("Suas cartas: " + mostrarMao());
+        System.out.println("Suas cartas (" + getCartasJogador().size() + "): " + mostrarMao());
 
-        while (escolha <= 0 || escolha > cartasJogador.size()) {
-            System.out.print("Escolha uma carta pelo seu indice: ");
-            escolha = Main.sc.nextInt();
+        if (cartasJogador.size() == 1) {
+            carta = cartasJogador.getFirst();
+            devolverCartas();
+            return carta;
         }
+        else {
+            while (escolha <= 0 || escolha > cartasJogador.size()) {
+                System.out.print("Escolha uma carta pelo seu indice: ");
+                escolha = Main.sc.nextInt();
+            }
 
-        return (escolha - 1);
+            carta = cartasJogador.get(escolha - 1);
+            removerCarta(escolha - 1);
+            return carta;
+        }
     }
 }

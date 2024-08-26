@@ -24,6 +24,11 @@ public final class Adversario extends Jogador {
     }
 
     @Override
+    public void devolverCartas() {
+        cartaAdversario.clear();
+    }
+
+    @Override
     public void removerCarta(int indice) {
         cartaAdversario.remove(indice);
     }
@@ -41,7 +46,18 @@ public final class Adversario extends Jogador {
     }
 
     @Override
-    public int jogarCarta() {
-        return new Random().nextInt(cartaAdversario.size());
+    public Carta jogarCarta() {
+        Carta carta;
+        if (cartaAdversario.size() > 1) {
+            int indice = new Random().nextInt(cartaAdversario.size());
+            carta = cartaAdversario.get(indice);
+            removerCarta(indice);
+            return carta;
+        }
+        else {
+            carta = cartaAdversario.getFirst();
+            devolverCartas();
+            return carta;
+        }
     }
 }
