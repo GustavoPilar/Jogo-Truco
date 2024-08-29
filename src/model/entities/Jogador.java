@@ -55,7 +55,7 @@ public class Jogador {
         Carta carta;
         int escolha = 0;
 
-        System.out.println("Suas cartas (" + getCartasJogador().size() + "): " + mostrarMao());
+        System.out.println("Suas cartas: " + mostrarMao());
 
         if (cartasJogador.size() == 1) {
             carta = cartasJogador.getFirst();

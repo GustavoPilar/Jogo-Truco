@@ -1,5 +1,6 @@
 package model.entities;
 
+import application.Main;
 import application.UI;
 
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.io.IOException;
 public final class Mesa {
 
     private final Baralho baralho;
+    private Boolean truco;
     private final Jogador jogador;
     private final Adversario adversario;
 
@@ -14,6 +16,7 @@ public final class Mesa {
         this.baralho = baralho;
         this.jogador = jogador;
         this.adversario = adversario;
+        truco = false;
     }
 
     public void mostrarMesa(Carta jogador, Carta adversario) {
@@ -66,9 +69,7 @@ public final class Mesa {
                     System.out.println("Você venceu.");
                     System.out.println("Subpontos: " + subPontosJogador + " x " + subPontosAdversario);
 
-                    if (subPontosJogador == 2){
-                        System.out.println("Você ganhou esta rodada.");
-                        jogador.setPontos(jogador.getPontos() + 1);
+                    if (subPontosJogador == 2 || truco){
                         jogador.devolverCartas();
                         adversario.devolverCartas();
                         UI.pause();
@@ -93,6 +94,7 @@ public final class Mesa {
                     venceuRodada = adversarioComeca();
                 }
 
+                truco = false;
             } while (subPontosJogador != 2 && subPontosAdversario != 2);
 
             if (jogador.getPontos() >= 12 || adversario.getPontos() >= 12) {
@@ -104,6 +106,7 @@ public final class Mesa {
     }
 
     public boolean jogadorComeca() throws IOException, InterruptedException {
+
         Carta cartaEscolhida = jogador.jogarCarta();
 
         Carta cartaAdversario = adversario.jogarCarta();
@@ -164,8 +167,7 @@ public final class Mesa {
 
             if (adversario.getValor() != coringa) {
                 return true;
-            }
-            else {
+            } else {
                 return indiceNipeAdversario > indiceNipeJogador;
             }
         }
@@ -173,11 +175,9 @@ public final class Mesa {
         // VERIFICAR A MAIOR
         if (indiceValorJogador > indiceValorAdversario) {
             return true;
-        }
-        else if (indiceValorJogador == indiceValorAdversario){
+        } else if (indiceValorJogador == indiceValorAdversario) {
             return indiceNipeAdversario > indiceNipeJogador;
-        }
-        else {
+        } else {
             return false;
         }
     }
